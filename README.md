@@ -39,6 +39,7 @@ The only ~~supported~~ encouraged way to run **GCP** is with [Docker](https://ww
       --env 'PROJECT_ROOT=public' \
       --volume /srv/gitlab-ce-pages/public:/home/pages/public/ \
       --volume /srv/gitlab-ce-pages/cname:/home/pages/cname/ \
+      --volume /srv/gitlab-ce-pages/nginx:/home/pages/nginx/ \
       -p 80:80 \
       yums/gitlab-ce-pages:1.2.1
  ```
@@ -79,6 +80,20 @@ Following are steps to set CNAME:
 
    Each line sets domains for a project. Pointing multiple domains to one project is supported.
  * Set your domains’ *A record* to GCP server IP and all settled.
+
+
+#### Custom NGINX configuration file
+You can include custom nginx configuration files by putting them in the nginx directory.
+
+Following are steps to setup custom nginx configration:
+ * Map some directory to GCP volume `/home/pages/nginx` with an additional option of `docker run`. Like
+
+ ```
+  --volume /srv/gitlab-ce-pages/nginx:/home/pages/nginx/
+ ```
+
+ * put your custom configuration in the nginx directory.
+ * reload nginx inside the container.
 
 ## Upgrading
 You can easily upgrade your GCP in following steps:
